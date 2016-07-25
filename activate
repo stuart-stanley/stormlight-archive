@@ -1,0 +1,3 @@
+cwd=`pwd`
+export PATH=$PATH:${cwd}/vtkpython/bin
+export PYTHONPATH=${cwd}/vtkpython/bin
