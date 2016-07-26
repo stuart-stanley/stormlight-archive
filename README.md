@@ -1,6 +1,20 @@
 # stormlight-archive
 play light control system
 
+
+To setup to run w/o draguino:
+grab http://www.vtk.org/files/release/7.0/vtkpython-7.0.0-Darwin-64bit.dmg
+open disk image
+drop 'vtkPython' from image to this directory. An 'ls' should show something like:
+LICENSE        activate       src
+README.md      capture        vtkpython
+
+Then "source ./activate"
+cd src
+vtkpython main.py --fake
+
+todo: update for other platforms! 
+
 # design-ish notes
 Goals;
 * be able to test off-real-thing
