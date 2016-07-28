@@ -12,30 +12,54 @@ class LEDThing(object):
         self.__modified = True
         self.__display_ctx = get_led_display_ctx_cb(self)
         self.__owned_by = OrderedDict()
+        self.__dbg = False
+
+    def __str__(self):
+        rs = 'led(strand={0},linx={1},pos={2})'.format(
+            self.__strand_index, self.__led_index, self.__position)
+        return rs
+
+    def __repr__(self):
+        return str(self)
 
     def get_grid(self):
         return (self.__led_index, 0, self.__strand_index)
 
+    def __calc_rgb_by_owners(self):
+        r = 0
+        g = 0
+        b = 0
+        for owner, rgb in self.__owned_by.items():
+            wr, wg, wb = rgb
+            r = (r + wr) & 0xff
+            g = (g + wg) & 0xff
+            b = (b + wb) & 0xff
+        return r, g, b
+            
     def set(self, red, green, blue, owner=None):
+        if owner is not None:
+            assert owner not in self.__owned_by.keys()
+            self.__owned_by[owner] = (red, green, blue)
+            red, green, blue = self.__calc_rgb_by_owners()
+            
         if red != self.__red or green != self.__green or blue != self.__blue:
             self.__modified = True
         self.__red = red
         self.__green = green
         self.__blue = blue
-        if owner is not None:
-            assert owner not in self.__owned_by.keys()
-            self.__owned_by[owner] = (red, green, blue)
+        if self.__dbg:
+            print "  {0} set to {1} owners={2}".format(
+                self, (red, green, blue), len(self.__owned_by))
 
     def unset(self, owner):
         if owner not in self.__owned_by.keys():
             print 'warning: {0} missing from {1}'.format(owner, self.__owned_by)
         else:
             del self.__owned_by[owner]
-        if len(self.__owned_by) == 0:
-            self.set(0,0,0)
-        else:
-            r, g, b = self.__owned_by.values()[0]
-            self.set(r,g,b)
+            if self.__dbg:
+                print "{0} owner {1} removed".format(self, owner)
+        r, g, b = self.__calc_rgb_by_owners()
+        self.set(r,g,b)
 
     def clear_modified(self):
         self.__modified = False

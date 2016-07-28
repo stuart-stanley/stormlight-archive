@@ -49,23 +49,29 @@ class GraphicsDisplay(DisplayDriver):
         
 
     def __tick_callback(self, obj, event):
-        c = self.__xxx_color
-        rg = Gradient(c, 5)
-        gg = Gradient(c, -5)
-        bg = Gradient(c, 0)
+        if self.__paused:
+            return
+        self.__algo_tick_callback()
 
-        self.set_gradient(rg, gg, bg)
-        c += 10
-        if c > 255:
-            c = 0
-        self.__xxx_color = c
-        print "tick", c
+    def __char_event_callback(self, obj, event):
+        key = obj.GetKeyCode()
+        print "key", key, type(key)
+        if key == ' ':
+            self.__paused = not self.__paused
+            return
+        elif key == 's':
+            self.__paused = True
+            self.__algo_tick_callback()
 
     def run(self, algo_tick_callback):
+        self.__paused = False
+        self.__algo_tick_callback = algo_tick_callback
         self.__rend_win_interactor.Initialize()
         self.__rend_win.Render()
-        self.__rend_win_interactor.AddObserver('TimerEvent', algo_tick_callback)
-        timer_id = self.__rend_win_interactor.CreateRepeatingTimer(1)
+        self.__rend_win_interactor.AddObserver('TimerEvent', self.__tick_callback)
+        self.__rend_win_interactor.AddObserver('CharEvent', 
+                                               self.__char_event_callback)
+        timer_id = self.__rend_win_interactor.CreateRepeatingTimer(10)
         self.__rend_win_interactor.Start()
 
         

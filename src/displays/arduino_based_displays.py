@@ -88,5 +88,5 @@ class ArduinoDisplay(DisplayDriver):
 
     def run(self, algo_tick_callback):
         while True:
-            algo_tick_callback(None, None)
+            algo_tick_callback()
 

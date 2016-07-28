@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 import argparse
 from arrangements import HopArch
-from algos import FireFlyGroup
+from algos import FireFlyGroup, TestFly
 
 class _StormlightParser(object):
     def __init__(self):
@@ -21,7 +21,8 @@ class _StormlightParser(object):
             self.__display = arduino_based_displays.ArduinoDisplay()
 
         self.__hop_arch = HopArch(self.__display, strand_count=2)
-        ffg = FireFlyGroup(self.__display, 50)
+        ffg = FireFlyGroup(self.__display, 10)
+        #ffg = TestFly(self.__display)
         self.__display.lock()
         self.__display.clearall()
         self.__display.run(ffg.tick_cb)

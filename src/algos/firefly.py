@@ -10,6 +10,7 @@ class FireFly(object):
         assert len(rgb_color) == 3
         assert tail_len > 0
         r, g, b = rgb_color
+        ir, ig, ib = rgb_color
 
         pix_list = []
         for inx in range(0, tail_len):
@@ -17,9 +18,9 @@ class FireFly(object):
             for pixel in pix_list:
                 pixel.do_move()
             pix_list.append(new_pixel)
-            r = r / 2
-            g = g / 2
-            b = b / 2
+            r = ir / (inx + 2)
+            g = ig / (inx + 2)
+            b = ib / (inx + 2)
 
         self.__pixels = pix_list
 
@@ -46,9 +47,29 @@ class FireFlyGroup(object):
         self.__fireflys = ffl
         self.__display = display
 
-    def tick_cb(self, obj, event):
+    def tick_cb(self):
         for ff in self.__fireflys:
             ff.tick_cb()
         self.__display.refresh_physical()
             
             
+class TestFly(object):
+    def __init__(self, display):
+        ffl = []
+        slow = SimpleXYZVelocity(display, 10, 0, 0, 1, 0, 0)
+        fast = SimpleXYZVelocity(display, 1, 0, 0, 1, 0, 0)
+        ffslow = FireFly(display, (50, 0, 0), (255, 0, 0), slow, 5)
+        fffast = FireFly(display, (0, 0, 0), (0, 255, 0), fast, 8)
+        self.__fireflys = [ffslow, fffast]
+        if True:
+            med = SimpleXYZVelocity(display, 2, 0, 2, 1, 0, 1)
+            fmed = FireFly(display, (80, 0, 0), (0, 0, 255), med, 20)
+            self.__fireflys.append(fmed)
+        self.__display = display
+
+    def tick_cb(self):
+        for ff in self.__fireflys:
+            ff.tick_cb()
+        self.__display.refresh_physical()
+           
+ 
