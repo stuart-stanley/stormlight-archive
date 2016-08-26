@@ -1,0 +1,71 @@
+from .display_base import DisplayDriver, LEDThing
+from neopixel import *
+
+class RaspberryNeopixelDisplay(DisplayDriver):
+    _LED1_COUNT      = 30      # Number of LED pixels.
+    _LED1_PIN        = 18      # GPIO pin connected to the pixels (must support PWM! GPIO 13 and 18 on RPi 3).
+    _LED1_FREQ_HZ    = 800000  # LED signal frequency in hertz (usually 800khz)
+    _LED1_DMA        = 5       # DMA channel to use for generating signal (Between 1 and 14)
+    _LED1_BRIGHTNESS = 128     # Set to 0 for darkest and 255 for brightest
+    _LED1_INVERT     = False   # True to invert the signal (when using NPN transistor level shift)
+    _LED1_CHANNEL    = 0       # 0 or 1
+    _LED1_STRIP      = ws.WS2811_STRIP_GRB
+
+    _LED2_COUNT      = 15      # Number of LED pixels.
+    _LED2_PIN        = 13      # GPIO pin connected to the pixels (must support PWM! GPIO 13 or 18 on RPi 3).
+    _LED2_FREQ_HZ    = 800000  # LED signal frequency in hertz (usually 800khz)
+    _LED2_DMA        = 10      # DMA channel to use for generating signal (Between 1 and 14)
+    _LED2_BRIGHTNESS = 128     # Set to 0 for darkest and 255 for brightest
+    _LED2_INVERT     = False   # True to invert the signal (when using NPN transistor level shift)
+    _LED2_CHANNEL    = 1       # 0 or 1
+    _LED2_STRIP      = ws.WS2811_STRIP_GRB
+    def __init__(self):
+        s1 = Adafruit_NeoPixel(self._LED_1_COUNT, 
+                               self._LED_1_PIN, 
+                               self._LED_1_FREQ_HZ, 
+                               self._LED_1_DMA, 
+                               self._LED_1_INVERT, 
+                               self._LED_1_BRIGHTNESS,
+                               self._LED_1_CHANNEL, 
+                               self._LED_1_STRIP)
+        s2 = Adafruit_NeoPixel(self._LED_2_COUNT, 
+                               self._LED_2_PIN, 
+                               self._LED_2_FREQ_HZ, 
+                               self._LED_2_DMA, 
+                               self._LED_2_INVERT, 
+                               self._LED_2_BRIGHTNESS,
+                               self._LED_2_CHANNEL, 
+                               self._LED_2_STRIP)
+        s1.begin()
+        s2.begin()
+        self.__strands = [s1, s2]
+        super(RaspberryNeopixelDisplay, self).__init__()
+
+    def _led_display_context(self, led):
+        assert isinstance(led, LEDThing), \
+            '{0} must be an LEDThing'.format(led)
+        return led
+
+    def _start_update(self):
+        self.__update_list = []
+
+    def _add_set_to_update(self, led):
+        self.__update_list.append((led, (led.red, led.green, led.blue)))
+        
+    def _complete_update(self):
+        led_str = ''
+        if len(self.__update_list) == 0:
+            return
+
+        for led, color in self.__update_list:
+            gx, gy, gz = led.get_grid()
+            r, g, b = color
+            self.__strands[gz].setPixelColor(gx, Color(r, b, g))
+        for strand in self.__strands:
+            strand.show()
+                                 
+
+    def run(self, algo_tick_callback):
+        while True:
+            algo_tick_callback()
+

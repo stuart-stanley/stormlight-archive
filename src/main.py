@@ -17,8 +17,10 @@ class _StormlightParser(object):
             from displays import graphics_based_displays
             self.__display = graphics_based_displays.GraphicsDisplay()
         else:
-            from displays import arduino_based_displays
-            self.__display = arduino_based_displays.ArduinoDisplay()
+            #from displays import arduino_based_displays
+            #self.__display = arduino_based_displays.ArduinoDisplay()
+            from display import raspberry_neopixel_displays
+            self.__display = raspberry_neopixel_displays.RaspberryNeopixelDisplay()
 
         self.__hop_arch = HopArch(self.__display, strand_count=2)
         ffg = FireFlyGroup(self.__display, 10)
