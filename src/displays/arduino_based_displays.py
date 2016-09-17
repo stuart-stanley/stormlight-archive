@@ -1,23 +1,7 @@
 from .display_base import DisplayDriver, LEDThing
 import uuid
-try:
-    import serial
-    is_real = True
-except:
-    is_real = False
-    class Serial(object):
-        def __init__(self, dev, baud):
-            pass
+import serial
 
-        def write(self, stuff):
-            pass
-
-    class _FakeMod(object):
-        def __init__(self):
-            self.Serial = Serial
-
-    serial = _FakeMod()
-        
 
 class ArduinoDisplay(DisplayDriver):
     def __init__(self, dev='/dev/ttyATH0', baud=115200):
@@ -39,7 +23,7 @@ class ArduinoDisplay(DisplayDriver):
     def __cmd_transaction(self, cmd, payload, wait_for=None):
         self.__send_msg(cmd, payload)
         done = False
-        while not done and is_real:
+        while not done:
             print "going to wait"
             rline = self.__ser.readline().strip()
             if len(rline) == 0:

@@ -35,9 +35,9 @@ class FireFlyGroup(object):
             dxt = random.randint(1, 10)
             mv = random.choice([-1, 1])
             tail = random.randint(3,10)
-            r = random.randint(0,255)
-            g = random.randint(0,255)
-            b = random.randint(0,255)
+            r = random.randint(0,100)
+            g = random.randint(0,8)
+            b = random.randint(0,5)
             x = random.randint(0,99)
             z = random.randint(0,1)
             y = 0
