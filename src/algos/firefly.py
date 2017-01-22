@@ -35,9 +35,12 @@ class FireFlyGroup(object):
             dxt = random.randint(1, 10)
             mv = random.choice([-1, 1])
             tail = random.randint(3,10)
-            r = random.randint(0,100)
-            g = random.randint(0,8)
-            b = random.randint(0,5)
+            t = 255
+            r = random.randint(0,255)
+            t -= r
+            g = random.randint(0,t)
+            t -= g
+            b = random.randint(0,t)
             x = random.randint(0,99)
             z = random.randint(0,1)
             y = 0
@@ -46,10 +49,19 @@ class FireFlyGroup(object):
             ffl.append(ff)
         self.__fireflys = ffl
         self.__display = display
+        self.__duration = random.randint(1000, 5000)
 
     def tick_cb(self):
         for ff in self.__fireflys:
             ff.tick_cb()
+
+        if self.__duration == 0:
+            import sys
+            sys.exit(0)
+        self.__duration -= 1
+        if self.__duration % 1000 == 0:
+            print self.__duration
+
         self.__display.refresh_physical()
             
             

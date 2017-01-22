@@ -58,6 +58,8 @@ class _StormlightParser(object):
         p.add_argument('--display', choices=self.__display_ctl.choices,
                        default=self.__display_ctl.best_default,
                        help='choose backing display type')
+        p.add_argument('--use-db', dest='use_db',
+                       help='run in db-driven mode')
 
         self.__args = p.parse_args()
         self.__parser = p
@@ -65,6 +67,7 @@ class _StormlightParser(object):
     def run(self):
         self.__display = self.__display_ctl.control_class(self.__args.display)()
         self.__hop_arch = HopArch(self.__display, strand_count=2)
+
         ffg = FireFlyGroup(self.__display, 30)
         #ffg = TestFly(self.__display)
         self.__display.lock()

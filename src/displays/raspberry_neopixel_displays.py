@@ -2,6 +2,25 @@ from .display_base import DisplayDriver, LEDThing
 from neopixel import *
 import time
 
+class _WatchdogPoker(object):
+    def __init__(self, wd_file='/run/stormlight-watchdog', interval=10):
+        self.__wd_file = wd_file
+        self.__interval = interval
+        self.__last_time = None
+        self.__ticks = 0
+        self.__update_file()
+
+    def __update_file(self):
+        self.__last_time = time.time()
+        with open(self.__wd_file, 'w') as wd_file:
+            wd_file.write('last-time={0}, ticks={1}\n'.format(self.__last_time, self.__ticks))
+
+    def handle_tick(self):
+        self.__ticks += 1
+        if time.time() - self.__last_time > self.__interval:
+            self.__update_file()
+
+
 class RaspberryNeopixelDisplay(DisplayDriver):
     _LED1_COUNT      = 100     # Number of LED pixels.
     _LED1_PIN        = 19      # GPIO pin connected to the pixels (must support PWM! GPIO 13 and 18 on RPi 3).
@@ -45,6 +64,7 @@ class RaspberryNeopixelDisplay(DisplayDriver):
             s2.setPixelColor(i, Color(0, 0, 0))
         s2.show()
         self.__strands = [s1, s2]
+        self.__watch_dog_file = _WatchdogPoker()
         super(RaspberryNeopixelDisplay, self).__init__()
 
     def _led_display_context(self, led):
@@ -74,5 +94,6 @@ class RaspberryNeopixelDisplay(DisplayDriver):
     def run(self, algo_tick_callback):
         while True:
             algo_tick_callback()
+            self.__watch_dog_file.handle_tick()
             #time.sleep(0.1)
 
