@@ -1,10 +1,10 @@
 from .display_base import DisplayDriver, LEDThing
 import uuid
-import serial
 
 
 class ArduinoDisplay(DisplayDriver):
     def __init__(self, dev='/dev/ttyATH0', baud=115200):
+        import serial
         self.__ser = serial.Serial(dev, baud)
         self.__init_cmd()
         super(ArduinoDisplay, self).__init__()

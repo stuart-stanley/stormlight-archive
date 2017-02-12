@@ -29,7 +29,7 @@ class FireFly(object):
             pixel.tick_cb()
 
 class FireFlyGroup(object):
-    def __init__(self, display, count):
+    def __init__(self, display, count, duration):
         ffl = []
         for inx in range(0, count):
             dxt = random.randint(1, 10)
@@ -49,7 +49,7 @@ class FireFlyGroup(object):
             ffl.append(ff)
         self.__fireflys = ffl
         self.__display = display
-        self.__duration = random.randint(1000, 5000)
+        self.__duration = duration
 
     def tick_cb(self):
         for ff in self.__fireflys:

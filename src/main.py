@@ -1,8 +1,9 @@
 #!/usr/bin/env python
 import argparse
 from arrangements import HopArch
-from algos import FireFlyGroup, TestFly
+from algos import FireFlyGroup, TestFly, Flames
 from displays import arduino_based_displays
+import random
 
 class _DisplaysProbe(object):
     def __init__(self):
@@ -67,12 +68,14 @@ class _StormlightParser(object):
     def run(self):
         self.__display = self.__display_ctl.control_class(self.__args.display)()
         self.__hop_arch = HopArch(self.__display, strand_count=2)
+        duration = random.randint(1000, 5000)
 
-        ffg = FireFlyGroup(self.__display, 30)
+        #algo_ins = FireFlyGroup(self.__display, 30, duration)
+        algo_ins = Flames(self.__display, 100, duration)
         #ffg = TestFly(self.__display)
         self.__display.lock()
         self.__display.clearall()
-        self.__display.run(ffg.tick_cb)
+        self.__display.run(algo_ins.tick_cb)
 
 
 if __name__ == '__main__':
