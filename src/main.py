@@ -70,8 +70,8 @@ class _StormlightParser(object):
         self.__hop_arch = HopArch(self.__display, strand_count=2)
         duration = random.randint(1000, 5000)
 
-        #algo_ins = FireFlyGroup(self.__display, 30, duration)
-        algo_ins = Flames(self.__display, 100, duration)
+        algo_ins = FireFlyGroup(self.__display, 30, duration)
+        #algo_ins = Flames(self.__display, 100, duration)
         #ffg = TestFly(self.__display)
         self.__display.lock()
         self.__display.clearall()
