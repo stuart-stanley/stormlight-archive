@@ -1,6 +1,8 @@
 import random
 import time
+import sys
 
+_debug = False
 
 class ColorMigrate(object):
     def __init__(self, current, dim=1, cds=(1,1,1)):
@@ -20,7 +22,8 @@ class ColorMigrate(object):
         self.__cur_colors = cur_colors
         self.__rates = rates
         self.__ticks_to_done = 255
-        print "cur", cur_colors, "rates", rates, "target", self.__tcolors
+        if _debug:
+            print "init-cur", cur_colors, "rates", rates, "target", self.__tcolors, self.__ticks_to_done
 
     def color_tick(self):
         rl = []
@@ -28,38 +31,51 @@ class ColorMigrate(object):
             new_float_color = self.__cur_colors[inx] + self.__rates[inx]
             self.__cur_colors[inx] = new_float_color
             rl.append(int(new_float_color))
-        self.__ticks_to_done -= self.__ticks_to_done
+        self.__ticks_to_done -= 1
         if self.__ticks_to_done <= 0:
             rv = True
         else:
             rv = False
+        if _debug:
+            print "color-tick", self.__cur_colors, self.__rates, rl, rv, self.__ticks_to_done
         return rv, rl
+
+    def current_colors(self):
+        rl = []
+        for float_color in self.__cur_colors:
+            rl.append(int(float_color))
+        return rl
+
 
 class Flames(object):
     def __init__(self, display, count, duration):
         self.__display = display
         self.__count = count
         self.__duration = duration
-        self.__dim = 1
+        self.__max_dim = 0.25
+        self.__dim = self.__max_dim
         self.__cdim = (1,1,1)
         self.__ticks = 0
         self.__migrate = ColorMigrate((0,0,0), self.__dim, self.__cdim)
 
     def tick_cb(self):
-        if self.__duration == 0:
-            import sys
-            sys.exit(0)
         self.__duration -= 1
         if self.__duration % 1000 == 0:
             print self.__duration
         self.__ticks += 1
-        if self.__ticks % 50 != 0:
+        if self.__ticks % 1 != 0:
             time.sleep(0.1)
-            return
-
-        migrate_done, next_base_colors = self.__migrate.color_tick()
-        if migrate_done:
-            self.__migrate = ColorMigrate(next_base_colors, self.__dim, self.__cdim)
+            next_base_colors = self.__migrate.current_colors()
+        else:
+            migrate_done, next_base_colors = self.__migrate.color_tick()
+            if migrate_done:
+                self.__migrate = ColorMigrate(next_base_colors, self.__dim, self.__cdim)
+                if self.__dim == 1:
+                    self.__dim = 0
+                else:
+                    self.__dim = self.__max_dim
+                    if self.__duration < 0:
+                        sys.exit(0)
 
         for inx in range(0, self.__count / 2):
             flicker = random.randint(0, 55)
@@ -71,6 +87,8 @@ class Flames(object):
                 use_color.append(color)
             x_r = inx
             x_l = 99 - inx  # todo: length from where?
+            if x_r == 0 and _debug:
+                print "pixel", x_r, use_color
             for z in range(0, 2):
                 self.__display.set_pixel((x_r, 0, z), None, use_color)
                 self.__display.set_pixel((x_l, 0, z), None, use_color)
