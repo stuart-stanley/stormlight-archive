@@ -11,9 +11,9 @@ README.md      capture        vtkpython
 
 Then "source ./activate"
 cd src
-vtkpython main.py --fake
+vtkpython main.py --display=sim
 
-todo: update for other platforms! 
+todo: update for other platforms!
 
 # design-ish notes
 Goals;
@@ -37,3 +37,18 @@ time-baed-things:
     bouncing-in-strand
     wrapping-on-strand
     ??? len, dx, dy, edge-action ???
+
+Firefly is (a set of) moving pixels. Fixed color/intensity.
+Flames are unmoving pixels, but with "moving" colors/intensity.
+
+route-1: api to add/delete moving pixels.
+ + local-proc does the tics
+ + can modify on the fly?
+ - dynamic motion/color sources?
+   ? some in-code (random #, etc)
+   ? code "in-code" sensors?
+   ? code "in-code" web-access
+   ? could make it so one could alter the generators
+
+
+route-2: 
