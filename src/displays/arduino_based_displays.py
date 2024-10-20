@@ -18,33 +18,33 @@ class ArduinoDisplay(DisplayDriver):
         self.__ser.write(cmd)
         self.__ser.write(payload)
         self.__ser.write(b'\2')
-        print "SENT", cmd, payload
+        print("SENT", cmd, payload)
 
     def __cmd_transaction(self, cmd, payload, wait_for=None):
         self.__send_msg(cmd, payload)
         done = False
         while not done:
-            print "going to wait"
+            print("going to wait")
             rline = self.__ser.readline().strip()
             if len(rline) == 0:
-                print 'timeout'
+                print('timeout')
             elif rline[0] == 'L':
-                print "LOG: ", rline[1:]
+                print("LOG: ", rline[1:])
             elif wait_for is not None and rline == wait_for:
-                print 'got-waitfor', wait_for
+                print('got-waitfor', wait_for)
                 done = True
             elif rline[0] == cmd:
                 if wait_for is not None:
                     if rline[1:] == wait_for:
-                        print 'got-wait-for', wait_for
+                        print('got-wait-for', wait_for)
                         done = True
                     else:
-                        print 'skip not wait-for {0} != response {1}'.format(wait_or, rline[1:])
+                        print('skip not wait-for {0} != response {1}'.format(wait_or, rline[1:]))
                 else:
-                    print 'got-response'
+                    print('got-response')
                     done = True
             else:
-                print 'unexpected response {0} to cmd {1}'.format(rline, cmd)
+                print('unexpected response {0} to cmd {1}'.format(rline, cmd))
 
 
     def _led_display_context(self, led):

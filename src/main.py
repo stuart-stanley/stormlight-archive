@@ -78,7 +78,7 @@ class _StormlightParser(object):
         ]
 
         algo_class, algo_args = algo_set[random.randint(0,len(algo_set)-1)]
-        print "picked", algo_class, algo_args
+        print("picked", algo_class, algo_args)
         algo_ins = algo_class(*algo_args)
         #algo_ins = FireFlyGroup(self.__display, 30, duration)
         #algo_ins = Flames(self.__display, 100, duration)

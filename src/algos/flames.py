@@ -23,7 +23,7 @@ class ColorMigrate(object):
         self.__rates = rates
         self.__ticks_to_done = 255
         if _debug:
-            print "init-cur", cur_colors, "rates", rates, "target", self.__tcolors, self.__ticks_to_done
+            print("init-cur", cur_colors, "rates", rates, "target", self.__tcolors, self.__ticks_to_done)
 
     def color_tick(self):
         rl = []
@@ -37,7 +37,7 @@ class ColorMigrate(object):
         else:
             rv = False
         if _debug:
-            print "color-tick", self.__cur_colors, self.__rates, rl, rv, self.__ticks_to_done
+            print("color-tick", self.__cur_colors, self.__rates, rl, rv, self.__ticks_to_done)
         return rv, rl
 
     def current_colors(self):
@@ -61,7 +61,7 @@ class Flames(object):
     def tick_cb(self):
         self.__duration -= 1
         if self.__duration % 1000 == 0:
-            print self.__duration
+            print(self.__duration)
         self.__ticks += 1
         if self.__ticks % 1 != 0:
             time.sleep(0.1)
@@ -77,7 +77,7 @@ class Flames(object):
                     if self.__duration < 0:
                         sys.exit(0)
 
-        for inx in range(0, self.__count / 2):
+        for inx in range(0, int(self.__count / 2)):
             flicker = random.randint(0, 55)
             use_color = []
             for color in next_base_colors:
@@ -88,7 +88,7 @@ class Flames(object):
             x_r = inx
             x_l = 99 - inx  # todo: length from where?
             if x_r == 0 and _debug:
-                print "pixel", x_r, use_color
+                print("pixel", x_r, use_color)
             for z in range(0, 2):
                 self.__display.set_pixel((x_r, 0, z), None, use_color)
                 self.__display.set_pixel((x_l, 0, z), None, use_color)

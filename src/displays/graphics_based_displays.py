@@ -13,7 +13,7 @@ class GraphicsDisplay(DisplayDriver):
         self.__update_list = []
         self.__xxx_color = 10
         width, height = self.__rend_win.GetSize()
-        #print self.__rend_win.GetSize()
+        #print(self.__rend_win.GetSize())
         #super(GraphicsDisplay, self).__init__(width, height)
         super(GraphicsDisplay, self).__init__()
 
@@ -38,7 +38,7 @@ class GraphicsDisplay(DisplayDriver):
                                    (led.red / 255.0, led.green / 255.0, led.blue / 255.0)))
 
     def _complete_update(self):
-        #print "start _complete_update"
+        #print("start _complete_update")
         for led, color in self.__update_list:
             actor = led.display_context
             actor.GetProperty().SetColor(color[0], color[1], color[2])
@@ -55,7 +55,7 @@ class GraphicsDisplay(DisplayDriver):
 
     def __char_event_callback(self, obj, event):
         key = obj.GetKeyCode()
-        print "key", key, type(key)
+        print("key", key, type(key))
         if key == ' ':
             self.__paused = not self.__paused
             return

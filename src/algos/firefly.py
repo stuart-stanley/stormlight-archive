@@ -18,9 +18,9 @@ class FireFly(object):
             for pixel in pix_list:
                 pixel.do_move()
             pix_list.append(new_pixel)
-            r = ir / (inx + 2)
-            g = ig / (inx + 2)
-            b = ib / (inx + 2)
+            r = int(ir / (inx + 2))
+            g = int(ig / (inx + 2))
+            b = int(ib / (inx + 2))
 
         self.__pixels = pix_list
 
@@ -60,7 +60,7 @@ class FireFlyGroup(object):
             sys.exit(0)
         self.__duration -= 1
         if self.__duration % 1000 == 0:
-            print self.__duration
+            print(self.__duration)
 
         self.__display.refresh_physical()
             

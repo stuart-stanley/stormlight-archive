@@ -52,3 +52,20 @@ route-1: api to add/delete moving pixels.
 
 
 route-2: 
+
+basic install
+pw to Iheart
+copied in ssh key
+
+echo "blacklist snd_bcm2835" > /etc/modprobe.d/snd-blacklist.conf
+sudo apt-get install scons -y
+sudo apt-get install python-dev swig -y
+  scons in rpi_ws281x
+  into "python" dir
+     python ./setup.py build
+     sudo python ./setup.py install
+
+
+git clone stormlight-archive
+git clone https://github.com/jgarff/rpi_ws281x.git
+git

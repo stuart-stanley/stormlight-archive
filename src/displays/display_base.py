@@ -48,16 +48,16 @@ class LEDThing(object):
         self.__green = green
         self.__blue = blue
         if self.__dbg:
-            print "  {0} set to {1} owners={2}".format(
-                self, (red, green, blue), len(self.__owned_by))
+            print("  {0} set to {1} owners={2}".format(
+                self, (red, green, blue), len(self.__owned_by)))
 
     def unset(self, owner):
         if owner not in self.__owned_by.keys():
-            print 'warning: {0} missing from {1}'.format(owner, self.__owned_by)
+            print('warning: {0} missing from {1}'.format(owner, self.__owned_by))
         else:
             del self.__owned_by[owner]
             if self.__dbg:
-                print "{0} owner {1} removed".format(self, owner)
+                print("{0} owner {1} removed".format(self, owner))
         r, g, b = self.__calc_rgb_by_owners()
         self.set(r,g,b)
 
