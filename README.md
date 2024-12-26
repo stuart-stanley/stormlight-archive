@@ -69,3 +69,19 @@ sudo apt-get install python-dev swig -y
 git clone stormlight-archive
 git clone https://github.com/jgarff/rpi_ws281x.git
 git
+
+## needed improvements
+- joining strands
+## cool ideas?
+
+### tool to create an Arrangement using two pi (or other) cams
+
+Twould be cool to set up two cams to get binocular vision and then cycle through lights
+one at a time in order to place them "in space".
+
+- would probably need to tell tool geometry of cameras:
+  - to each other
+  - to a nominal "center" of the arrangement space
+- thinking of a christmas tree, it might take multiple scans to get full
+  view of the arrangement.
+

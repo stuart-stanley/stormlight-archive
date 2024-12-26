@@ -1,0 +1,11 @@
+[Unit]
+Description=The stormlight archive in simple mode
+Before=watchdog.service
+After=multi-user.service
+
+[Service]
+Type=idle
+ExecStart=/home/pi/stormlight-archive/src/spinrun.sh 2>&1 /dev/null
+
+[Install]
+WantedBy=multi-user.target

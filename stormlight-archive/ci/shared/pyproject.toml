@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "stormlight-archive"
+version = "0.1.0"
+description = "Application for running LED strings"
+authors = ["Stuart Stanley <stu00@mac.com>"]
+packages = [{include = "stormlight-archive"}]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+rpi-ws281x = "^5.0.0"
+rpi-gpio = "^0.7.1"
+paho-mqtt = "^2.1.0"
+
+[build-system]
+requires = ["poetry-core>=1.7.0", "poetry-dynamic-versioning>=0.17.1"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry-dynamic-versioning]
+enable = true
+metadata = true
