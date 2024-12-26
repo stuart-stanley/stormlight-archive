@@ -82,6 +82,8 @@ celerybeat-schedule
 venv/
 ENV/
 
+.doit.db
+.doit.db.db
 # Spyder project settings
 .spyderproject
 

@@ -1,11 +1,12 @@
 # TODO: template this so we can have a common install of on-box env
-export APP_PACKAGE_LOCATION=/usr/local/line_label_system/line_label_system_gf_ms
+export DEV_USER=stuarts
+export APP_PACKAGE_LOCATION=/usr/local/stormlight_archive/stormlight_archive
 
 eval "$(direnv hook bash)"
 
 if [ ! -z "${SSH_CLIENT}" ] ; then
     ${APP_PACKAGE_LOCATION}/bin/generate_ssh_env_vars.py > ~/ssh_plus_balena_env_vars
-    cp ~/ssh_plus_balena_env_vars ~mfgsw/ssh_plus_balena_env_vars
+    cp ~/ssh_plus_balena_env_vars ~${DEV_USER}/ssh_plus_balena_env_vars
 fi
 
 if [ -f ~/ssh_plus_balena_env_vars ] ; then

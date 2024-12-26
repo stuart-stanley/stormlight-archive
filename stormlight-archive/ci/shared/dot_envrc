@@ -14,3 +14,7 @@ layout_poetry() {
   PATH_add "$VIRTUAL_ENV/bin"
 }
 layout_poetry
+
+
+# give access to balena when/if it is fetched.
+PATH_add .venv/balena-cli/

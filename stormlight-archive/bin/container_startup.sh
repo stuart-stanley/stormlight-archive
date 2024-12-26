@@ -1,19 +1,17 @@
 #!/usr/bin/env bash
 
-export APP_PACKAGE_LOCATION=/usr/local/line_label_system/line_label_system_gf_ms
+export APP_PACKAGE_LOCATION=/usr/local/stormlight_archive/stormlight_archive
+export DEV_USER=stuarts
 
-if [[ ${LINE_LABEL_SYSTEM_START_SSH} -eq 1 ]] ; then
+if [[ ${STORMLIGHT_ARCHIVE__START_SSH} -eq 1 ]] ; then
     service ssh start
 fi
 
 
-# Do the other half of setup_mfgsw_user.sh and populate the /home/mfgsw
+# Do the other half of setup_dev_user.sh and populate the /home/${DEV_USER}
 # persistent volume. Note we do this before turning on 'set -x' because really,
 # this isn't mission critical.
-su mfgsw --login --pty --shell /bin/bash ${APP_PACKAGE_LOCATION}/ci/templates/mfgsw_user/setup_mfgsw_user_container_start.sh
-
-# Make /dev/console writeable by non-priv. Nicer would be ACLs, but that requires systemd et al.
-chmod 0622 /dev/console
+su ${DEV_USER} --login --pty --shell /bin/bash ${APP_PACKAGE_LOCATION}/ci/templates/dev_user/setup_dev_user_container_start.sh
 
 
 if [ ${BALENA} ] ; then

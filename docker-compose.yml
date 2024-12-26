@@ -1,0 +1,28 @@
+version: "2.1"
+volumes:
+  x11:
+  resin-data:
+  dev-user:
+services:
+  line-labler:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - 'resin-data:/data'
+      - 'x11:/tmp/.X11-unix'
+      - 'dev-user:/home/stuarts'
+    ports:
+      - "22:22"
+    privileged: true
+    restart: always
+    devices:
+      - /dev:/dev
+    group_add:
+      - video
+  xserver:
+    image: bh.cr/g_dean_putney/xterminal
+    restart: always
+    privileged: true
+    volumes:
+      - 'x11:/tmp/.X11-unix'
