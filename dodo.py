@@ -136,7 +136,7 @@ def task_deploy_production():
     # _build_data = fixture_info.get_software_info()
     # btag = _build_data.build_tag
     btag = "todo-from-poetry"
-    atxt = "DEBUG=%(bebug)s balena push stormlight --release-tag build {}".format(
+    atxt = "DEBUG=%(bebug)s balena push gh_stuart_stanley/stormlight --release-tag build {}".format(
         btag)
     return {
         'basename': 'deploy-production',

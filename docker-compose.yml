@@ -4,7 +4,7 @@ volumes:
   resin-data:
   dev-user:
 services:
-  line-labler:
+  stormlight-archiver:
     build:
       context: .
       dockerfile: Dockerfile
@@ -21,7 +21,7 @@ services:
     group_add:
       - video
   xserver:
-    image: bh.cr/g_dean_putney/xterminal
+    image: bh.cr/balenalabs/xserver-aarch64
     restart: always
     privileged: true
     volumes:

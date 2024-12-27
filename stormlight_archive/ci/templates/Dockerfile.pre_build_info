@@ -1,4 +1,4 @@
-FROM balenalib/raspberrypi4-ubuntu:noble
+FROM balenalib/raspberrypi4-64-ubuntu:noble
 
 
 # Set DEBIAN_FRONTENV to allow easier headless installs
