@@ -36,6 +36,11 @@ ENV APP_PACKAGE_LOCATION=${APP_LOCATION}/${PACKAGE_NAME}
 
 RUN mkdir -p ${APP_LOCATION}/
 
+RUN install_packages \
+  git \
+  direnv \
+  fzf \
+  zsh
 
 # Go get poetry!
 ENV POETRY_HOME=/usr/local/poetry
@@ -67,6 +72,8 @@ COPY ${PACKAGE_NAME}/ci/shared/pyproject.toml pyproject.toml
 
 # Now the actual code
 COPY ${PACKAGE_NAME}/ ${PACKAGE_NAME}/
+# Needed for poetry to build...
+COPY README.md README.md
 
 # Now let poetry do its magic
 RUN direnv allow && \
@@ -93,7 +100,8 @@ RUN mkdir -p /data/.ssh && \
     
 # -- and bring over some handy bashness/tools
 #  TODO: use a template system to make some stuff configable from here
-RUN ${PACKAGE_NAME}/ci/templates/dot_bashrc_append >> /root/.bashrc && \
+RUN cat ${PACKAGE_NAME}/ci/templates/dot_bashrc_append >> /root/.bashrc && \
+    touch /root/startup_based_env_var.env
 COPY ${PACKAGE_NAME}/ci/templates/dot_bash_aliases /root/.bash_aliases
 
 # And other remote access/diag/dev stuff
@@ -117,6 +125,11 @@ RUN install_packages \
     xterm \
     zip
 
+# force key-based ssh only AND make it so X11 forwarding can work.
+RUN echo "PasswordAuthentication no" >> /etc/ssh/sshd_config && \
+    echo "AddressFamily inet" >> /etc/ssh/sshd_config && \
+    echo "X11Forwarding yes" >> /etc/ssh/sshd_config
+    
 # TODO: these bits should be from a deployment package not raw
 # RUN mkdir -p /root/.fvwm && \
 #    mv line_label_system_gf_ms/ci/templates/fvwm_config /root/.fvwm/config

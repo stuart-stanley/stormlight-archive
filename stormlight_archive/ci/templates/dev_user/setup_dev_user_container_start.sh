@@ -22,16 +22,17 @@ if [ ! -d /home/${DEV_USER_NAME}/.oh-my-zsh/ ] ; then
     chmod +x install.sh
     sh ./install.sh --unattended
     rm install.sh
+    cp ${APP_PACKAGE_LOCATION}/ci/templates/dot_zshrc.template /home/${DEV_USER_NAME}/.zshrc
 fi
-if [ ! -d /home/${DEV_USER_NAME}/.oh-my-zsh/custome/themes/Ducula ] ; then
-    ZSH_CUSTOM=/home/nfgsw/.oh-my-zsh/custom
+if [ ! -d /home/${DEV_USER_NAME}/.oh-my-zsh/custom/themes/Ducula ] ; then
+    ZSH_CUSTOM=/home/${DEV_USER_NAME}/.oh-my-zsh/custom
     git clone https://github.com/janjoswig/Ducula.git ${ZSH_CUSTOM}/themes/Ducula
 fi
 if [ ! -f /home/${DEV_USER_NAME}/.zshrc ] ; then
-    cp ${APP_PACKAGE_LOCATION}/ci/templates/${DEV_USER_NAME}_user/dot_zshrc.template /home/${DEV_USER_NAME}/.zshrc
+    cp ${APP_PACKAGE_LOCATION}/ci/templates/dot_zshrc.template /home/${DEV_USER_NAME}/.zshrc
 fi
 if [ ! -f /home/${DEV_USER_NAME}/.emacs ] ; then
-     cp ${APP_PACKAGE_LOCATION}/ci/templates/${DEV_USER_NAME}_user/dot_emacs.template /home/${DEV_USER_NAME}/.emacs
+     cp ${APP_PACKAGE_LOCATION}/ci/templates/dot_emacs.template /home/${DEV_USER_NAME}/.emacs
 fi
 if [ ! -d /home/${DEV_USER_NAME}/.iterm2 ] ; then
     curl -L https://iterm2.com/shell_integration/install_shell_integration_and_utilities.sh | zsh

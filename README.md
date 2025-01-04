@@ -85,3 +85,41 @@ one at a time in order to place them "in space".
 - thinking of a christmas tree, it might take multiple scans to get full
   view of the arrangement.
 
+### post-balena new-device notes
+#### steps
+copyied in authorized_keys to root
+
+first ssh to root saw:
+  cp: cannot create regular file '~stuarts/ssh_plus_balena_env_vars': No such file or directory... wahaha????
+  root@deep-surf:~# touch ~${DEV_USER}/x
+  touch: cannot touch '~stuarts/x': No such file or directory
+  root@deep-surf:~# touch ~stuarts/x
+  root@deep-surf:~#
+
+Ok, so that's a thing. The ~ expands to 'root'
+-- fixed by using /home/${DEV_USER}
+
+first su - stuarts
+ -- went into zsh set. ah: /usr/local/stormlight_archive/stormlight_archive/ci/templates/dev_user/setup_dev_user_container_start.sh: No such file or direc
+   -- It was named setupdev_user... Fixed.
+did deploy.
+
+Next boot, saw:
+ stormlight-archive  + ZSH_CUSTOM=/home/nfgsw/.oh-my-zsh/custom
+ stormlight-archive  + git clone https://github.com/janjoswig/Ducula.git /home/nfgsw/.oh-my-zsh/custom/themes/Ducula
+ stormlight-archive  fatal: could not create leading directories of '/home/nfgsw/.oh-my-zsh/custom/themes/Ducula': Permission denied
+ stormlight-archive  cp: cannot stat '/usr/local/stormlight_archive/stormlight_archive/ci/templates/stuarts_user/dot_emacs.template': No such file or directory
+
+fixed nfgsw and trying to pull from DEV_USER in templates
+removed everything in /home/stuart
+did deploy.
+
+Still not complete zsh...
+- looks like something was plopping down a .zshrc? Maybe hacked it to copy ours when installing ohmyzsh.
+- custome type for Ducula
+
+
+Setting up ssh in worker space:
+https://github.com/settings/keys
+on-target or common:
+'ssh-keygen -t ed25519`

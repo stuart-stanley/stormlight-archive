@@ -17,9 +17,3 @@ useradd --shell /bin/zsh --groups dialout,video --create-home --home-dir /home/$
 # also make it so sshd WON'T use it.
 usermod ${DEV_USER} --password $(openssl rand -base64 32)
 usermod ${DEV_USER} --unlock
-
-echo "PasswordAuthentication no" >> /etc/ssh/sshd_config
-# allow X11 forwarding to actually work.
-echo "AddressFamily inet" >> /etc/ssh/sshd_config
-# and turn it on
-echo "X11Forwarding yes" >> /etc/ssh/sshd_config
