@@ -1,0 +1,2 @@
+- think through balana vs bare metal deploys
+- resynch Dockerfile.pre_build_info with hand edits Dockerfile
