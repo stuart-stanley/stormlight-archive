@@ -1,3 +1,4 @@
+#!/bin/env bash
 # TODO: template this so we can have a common install of on-box env
 export DEV_USER=stuarts
 export APP_PACKAGE_LOCATION=/usr/local/stormlight_archive/stormlight_archive

@@ -1,5 +1,11 @@
 #!/usr/bin/env bash
 
+
+while ( true ) ; do
+    echo "placeholder for X11 dev maybe"
+    sleep 60
+done
+
 export DISPLAY=:0
 export DBUS_SYSTEM_BUS_ADDRESS=unix:path=/host/run/dbus/system_bus_socket
 

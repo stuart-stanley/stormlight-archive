@@ -1,6 +1,5 @@
 version: "2.1"
 volumes:
-  x11:
   resin-data:
   dev-user:
 services:
@@ -10,7 +9,6 @@ services:
       dockerfile: Dockerfile
     volumes:
       - 'resin-data:/data'
-      - 'x11:/tmp/.X11-unix'
       - 'dev-user:/home/stuarts'
     ports:
       - "22:22"
@@ -20,9 +18,3 @@ services:
       - /dev:/dev
     group_add:
       - video
-  xserver:
-    image: bh.cr/balenalabs/xserver-aarch64
-    restart: always
-    privileged: true
-    volumes:
-      - 'x11:/tmp/.X11-unix'

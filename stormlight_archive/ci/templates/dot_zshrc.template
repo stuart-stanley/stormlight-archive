@@ -98,13 +98,12 @@ export LANG=en_US.UTF-8
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 source ~/.iterm2_shell_integration.zsh
-export POETRY_HOME=/opt/local/
+export POETRY_HOME=/usr/local/poetry
 export PATH=${POETRY_HOME}/bin:$PATH:/sbin
 export DISPLAY=localhost:10.0
 eval "$(direnv hook zsh)"
 alias emacs="emacs -nw"
 export EDITOR="emacs -nw"
-export PATH=/opt/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 if [ -f ~/ssh_plus_balena_env_vars ] ; then
     source ~/ssh_plus_balena_env_vars
 fi
