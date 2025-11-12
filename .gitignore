@@ -93,3 +93,4 @@ ENV/
 src/failsnap.tgz
 src/.vscode/
 vtkpython/
+failsnap.tgz

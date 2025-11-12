@@ -26,7 +26,7 @@ if [ ! -d /home/${DEV_USER_NAME}/.oh-my-zsh/ ] ; then
     cp ${APP_PACKAGE_LOCATION}/ci/templates/${DEV_USER_NAME}_user/dot_zshrc.template /home/${DEV_USER_NAME}/.zshrc
 fi
 if [ ! -d /home/${DEV_USER_NAME}/.oh-my-zsh/custom/themes/Ducula ] ; then
-    ZSH_CUSTOM=/home/nfgsw/.oh-my-zsh/custom
+    ZSH_CUSTOM=/home/${DEV_USER_NAME}/.oh-my-zsh/custom
     git clone https://github.com/janjoswig/Ducula.git ${ZSH_CUSTOM}/themes/Ducula
 fi
 if [ ! -f /home/${DEV_USER_NAME}/.zshrc ] ; then

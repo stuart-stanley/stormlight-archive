@@ -4,12 +4,29 @@ ENV APP_LOCATION=/usr/local/stormlight_archive
 ENV PACKAGE_NAME=stormlight_archive
 ENV APP_PACKAGE_LOCATION=${APP_LOCATION}/${PACKAGE_NAME}
 
+# NOTE: xterm for 'resize'
 RUN apt-get update && apt-get install -y \
+  xterm \
   bc \
   git \
   direnv \
   fzf \
   zsh
+
+# start: stuff for rpi_ws281x user-space module
+RUN apt-get install -y \
+  cmake
+
+WORKDIR /tmp/
+# Build steps from https://github.com/jgarff/rpi_ws281x/blob/master/README.md
+RUN git clone https://github.com/jgarff/rpi_ws281x.git && \
+    cd rpi_ws281x && \
+    mkdir build && \
+    cd build && \
+    cmake -D BUILD_SHARED=OFF -D BUILD_TEST=ON .. && \
+    cmake --build . && \
+    make install
+
 
 RUN mkdir -p ${APP_LOCATION}/
 
