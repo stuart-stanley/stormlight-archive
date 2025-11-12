@@ -1,4 +1,5 @@
 - think through balana vs bare metal deploys
 - resynch Dockerfile.pre_build_info with hand edits Dockerfile
-- if ws281x, need to build/install c code in dockerfil. 
-  cmake? scons
+- fix .emacs ws-butler
+- conditional pyproject for ws281x
+- make devuser optional? Also add 'git config --global etc' to Dockerfile
