@@ -10,7 +10,6 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = "^3.11"
 doit = "^0.36.0"
-rpi-ws281x = "^5.0.0"
 
 [build-system]
 requires = ["poetry-core>=1.7.0", "poetry-dynamic-versioning>=0.17.1"]

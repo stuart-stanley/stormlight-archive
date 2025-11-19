@@ -17,6 +17,10 @@ RUN apt-get update && apt-get install -y \
 RUN apt-get install -y \
   cmake
 
+# audio for house-soul
+#RUN apt-get install -y \
+#  portaudio19-dev
+
 WORKDIR /tmp/
 # Build steps from https://github.com/jgarff/rpi_ws281x/blob/master/README.md
 RUN git clone https://github.com/jgarff/rpi_ws281x.git && \
