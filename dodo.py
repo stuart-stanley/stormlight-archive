@@ -177,7 +177,6 @@ def task_get_balena_cli():
         raise Exception("WARNING: unknown platform.machine {}. Showing all 'howto install' instructions".format(
             arch))
 
-
     dl_file_name = "balena-cli-{}-{}-{}-standalone.zip".format(version, os_field, arch_field)
     dl_file_dir_path = _REPO_ROOT / '.venv'
     dl_file_dir_path.mkdir(exist_ok=True)
@@ -214,7 +213,6 @@ def task_get_balena_cli():
     }
 
 
-
 def task_prepareproduction_deploy_group():
     """group of all steps to prepapre and deploy to production via balena"""
     return {
@@ -222,5 +220,3 @@ def task_prepareproduction_deploy_group():
         'actions': None,
         'task_dep': ['check-preconditions', 'get-balena-cli']
     }
-
-

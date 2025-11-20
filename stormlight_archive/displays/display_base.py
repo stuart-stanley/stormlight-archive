@@ -1,5 +1,6 @@
 from collections import OrderedDict
 
+
 # todo: ABC for all displays. Maybe auto-detect fake vs real
 class LEDThing(object):
     def __init__(self, pos, sinx, linx, get_led_display_ctx_cb):
@@ -35,13 +36,13 @@ class LEDThing(object):
             g = (g + wg) & 0xff
             b = (b + wb) & 0xff
         return r, g, b
-            
+
     def set(self, red, green, blue, owner=None):
         if owner is not None:
             assert owner not in self.__owned_by.keys()
             self.__owned_by[owner] = (red, green, blue)
             red, green, blue = self.__calc_rgb_by_owners()
-            
+
         if red != self.__red or green != self.__green or blue != self.__blue:
             self.__modified = True
         self.__red = red
@@ -60,7 +61,7 @@ class LEDThing(object):
             if self.__dbg:
                 print("{0} owner {1} removed".format(self, owner))
         r, g, b = self.__calc_rgb_by_owners()
-        self.set(r,g,b)
+        self.set(r, g, b)
 
     def clear_modified(self):
         self.__modified = False
@@ -101,9 +102,10 @@ class LEDThing(object):
     def radius(self):
         return 6
 
+
 class Gradient(object):
     def __init__(self, base, step):
-        assert base >=0 and base <= 255
+        assert base >= 0 and base <= 255
         assert step >= -254 and step <= 254
         self.__base = base
         self.__step = step
@@ -121,18 +123,18 @@ class Gradient(object):
             nval = nval - 255
         self.__next_value = nval
         return rval
-    
+
 
 class StrandThing(object):
     def __init__(self, strand_inx, get_led_display_ctx_cb):
         self.__leds = []
         self.__strand_inx = strand_inx
-        self.__modified = True # todo: optimize modified
+        self.__modified = True  # todo: optimize modified
         self.__get_led_display_ctx_cb = get_led_display_ctx_cb
 
     def add_led(self, led_pos):
         led_inx = len(self.__leds)
-        led = LEDThing(led_pos, self.__strand_inx, led_inx, 
+        led = LEDThing(led_pos, self.__strand_inx, led_inx,
                        self.__get_led_display_ctx_cb)
         self.__leds.append(led)
         return led
@@ -143,10 +145,10 @@ class StrandThing(object):
                 add_led_set_to_update_cb(led)
                 led.clear_modified()
         self.__modified = False
-        
+
     def set(self, inx, r, g, b):
         led = self.__leds[inx]
-        led.set(r,g,b)
+        led.set(r, g, b)
         if not self.__modified and led.modified:
             self.__modified = True
 
@@ -159,14 +161,15 @@ class StrandThing(object):
         g_grad.reset()
         b_grad.reset()
         for led_inx in range(0, len(self.__leds)):
-            self.set(led_inx, r_grad.next_value(), g_grad.next_value(), 
+            self.set(led_inx, r_grad.next_value(), g_grad.next_value(),
                      b_grad.next_value())
 
     def clearall(self):
-        self.setall(0,0,0)
+        self.setall(0, 0, 0)
 
     def get_led(self, inx):
         return self.__leds[inx]
+
 
 class DisplayDriver(object):
     def __init__(self):
@@ -192,9 +195,11 @@ class DisplayDriver(object):
     @property
     def max_x_pixel(self):
         return self.__limits[0]
+
     @property
     def max_y_pixel(self):
         return self.__limits[1]
+
     @property
     def max_z_pixel(self):
         return self.__limits[2]
@@ -216,7 +221,7 @@ class DisplayDriver(object):
     def setall(self, r, g, b):
         self.__check_locked()
         for strand in self.__strands:
-            strand.setall(r,g,b)
+            strand.setall(r, g, b)
         self.refresh_physical()
 
     def set_gradient(self, r_grad, g_grad, b_grad):
@@ -250,4 +255,3 @@ class DisplayDriver(object):
         led = self.__led_from_grid_location(grid_loc)
         r, g, b = rgb_color
         led.set(r, g, b, owner)
-        

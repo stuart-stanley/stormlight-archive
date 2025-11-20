@@ -4,6 +4,7 @@ import socket
 import struct
 import time
 
+
 class WledNeopixelDisplay(DisplayDriver):
     _DDP_DATATYPE = 0x0b   # RGB (type=001), 8-bit (size=011)
     _DDP_PUSH = 0x01

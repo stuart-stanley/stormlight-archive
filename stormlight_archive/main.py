@@ -9,6 +9,7 @@ from algos import (
 )
 import random
 
+
 class _DisplaysProbe(object):
     def __init__(self):
         available = {}
@@ -46,7 +47,6 @@ class _DisplaysProbe(object):
                 return name
         assert False, 'impossible code path'
 
-
     def control_class(self, display_name):
         cc = self.__available[display_name]
         return cc
@@ -74,22 +74,23 @@ class _StormlightParser(object):
         algo_set = [
             [Twinkle, (self.__display, 100, duration)],
             [Twinkle, (self.__display, 100, duration)],
-            [FireFlyGroup, (self.__display, random.randint(2,50), duration)],
+            [FireFlyGroup, (self.__display, random.randint(2, 50), duration)],
             [FireFlyGroup, (self.__display, 2, duration)],
-            [Flames, (self.__display, random.randint(50,100), duration)],
-            [Flames, (self.__display, random.randint(25,100), duration)]
+            [Flames, (self.__display, random.randint(50, 100), duration)],
+            [Flames, (self.__display, random.randint(25, 100), duration)]
         ]
-
 
         random_algo = True
         if random_algo:
-            algo_class, algo_args = algo_set[random.randint(0,len(algo_set)-1)]
+            algo_class, algo_args = algo_set[random.randint(0, len(algo_set)-1)]
             print("picked", algo_class, algo_args)
             algo_ins = algo_class(*algo_args)
         else:
-            #algo_ins = FireFlyGroup(self.__display, 30, duration)
-            #algo_ins = Flames(self.__display, 100, duration)
-            #ffg = TestFly(self.__display)
+            if False:
+                algo_ins = TreeCircleGroup(self.__display)
+                algo_ins = FireFlyGroup(self.__display, 30, duration)
+                algo_ins = Flames(self.__display, 100, duration)
+                algo_ins = TestFly(self.__display)
             algo_ins = TestTreeCircle(self.__display)
             algo_ins = Twinkle(self.__display, 100, duration*100)
         self.__display.lock()

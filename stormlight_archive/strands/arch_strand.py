@@ -13,20 +13,17 @@ class ArchStrand(object):
         step_x = 20
         leds = []
         self.__display_strand = display.add_strand()
-        led_inx = 0
         for _ in range(0, count_up):
-            led = self.__display_strand.add_led((x,y,z))
+            led = self.__display_strand.add_led((x, y, z))
             leds.append(led)
             y = y + step_y
         for _ in range(0, count_across):
-            led = self.__display_strand.add_led((x,y,z))
+            led = self.__display_strand.add_led((x, y, z))
             leds.append(led)
             x = x + step_x
         for _ in range(0, count_down):
-            led = self.__display_strand.add_led((x,y,z))
+            led = self.__display_strand.add_led((x, y, z))
             leds.append(led)
             y = y - step_y
 
         self.__leds = leds
-
-

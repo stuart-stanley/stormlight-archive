@@ -1,5 +1,6 @@
 import copy
 
+
 class Velocity(object):
     def __init__(self, dt, increment=1, bounce=True):
         self.__dt = dt
@@ -17,7 +18,7 @@ class Velocity(object):
         if location >= self.__limit:
             if self.__bounce:
                 self.__increment = -1 * self.__increment
-                # went above limit implies increment was positive and is 
+                # went above limit implies increment was positive and is
                 # now negative
                 temp_inc = self.__increment - 1
                 location += temp_inc
@@ -44,7 +45,7 @@ class Velocity(object):
             location = self.calculate_next(location)
             self.__ticks = 0
         return location
-                
+
 
 class XYZVelocity(object):
     def __init__(self, display, xdt, ydt, zdt):

@@ -1,6 +1,7 @@
 # todo: ABC for all displays. Maybe auto-detect fake vs real
-from .display_base import DisplayDriver, LEDThing, Gradient
+from .display_base import DisplayDriver, LEDThing
 import vtk
+
 
 class GraphicsDisplay(DisplayDriver):
     def __init__(self):
@@ -13,8 +14,8 @@ class GraphicsDisplay(DisplayDriver):
         self.__update_list = []
         self.__xxx_color = 10
         width, height = self.__rend_win.GetSize()
-        #print(self.__rend_win.GetSize())
-        #super(GraphicsDisplay, self).__init__(width, height)
+        # print(self.__rend_win.GetSize())
+        # super(GraphicsDisplay, self).__init__(width, height)
         super(GraphicsDisplay, self).__init__()
 
     def _led_display_context(self, led):
@@ -38,15 +39,14 @@ class GraphicsDisplay(DisplayDriver):
                                    (led.red / 255.0, led.green / 255.0, led.blue / 255.0)))
 
     def _complete_update(self):
-        #print("start _complete_update")
+        # print("start _complete_update")
         for led, color in self.__update_list:
             actor = led.display_context
             actor.GetProperty().SetColor(color[0], color[1], color[2])
 
-        #print("end _complete_update")
+        # print("end _complete_update")
         self.__rend_win.Render()
         self.__update_list = []
-        
 
     def __tick_callback(self, obj, event):
         if self.__paused:
@@ -69,9 +69,7 @@ class GraphicsDisplay(DisplayDriver):
         self.__rend_win_interactor.Initialize()
         self.__rend_win.Render()
         self.__rend_win_interactor.AddObserver('TimerEvent', self.__tick_callback)
-        self.__rend_win_interactor.AddObserver('CharEvent', 
+        self.__rend_win_interactor.AddObserver('CharEvent',
                                                self.__char_event_callback)
-        timer_id = self.__rend_win_interactor.CreateRepeatingTimer(10)
+        self.__timer_id = self.__rend_win_interactor.CreateRepeatingTimer(10)
         self.__rend_win_interactor.Start()
-
-        
