@@ -1,0 +1,12 @@
+[flake8]
+exclude =
+    .git,
+    __pycache__,
+    .venv,
+    .poetry,
+    dist,
+    geo_vyacc.py,
+    geo_vlex.py,
+    gfl_data,
+    .gfl_data
+max_line_length=132
