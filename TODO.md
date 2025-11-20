@@ -1,5 +1,6 @@
 - think through balana vs bare metal deploys
 - resynch Dockerfile.pre_build_info with hand edits Dockerfile
-- fix .emacs ws-butler
-- conditional pyproject for ws281x
+- fix .emacs ws-butler?
 - make devuser optional? Also add 'git config --global etc' to Dockerfile
+- fix update rates. On MAC, you need a sleep in the Tic, which means we need tics to be related to real time
+- figure and implement WLED config

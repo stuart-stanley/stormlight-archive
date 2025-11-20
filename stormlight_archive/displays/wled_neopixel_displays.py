@@ -14,6 +14,7 @@ class WledNeopixelDisplay(DisplayDriver):
 
     def __init__(self):
         self.__destination = "localhost"
+        self.__destination = "glabooh.local"
         self.__dport = 4048
         s1 = 100
         s2 = 100
@@ -82,4 +83,4 @@ class WledNeopixelDisplay(DisplayDriver):
     def run(self, algo_tick_callback):
         while True:
             algo_tick_callback()
-            time.sleep(0.01)
+            time.sleep(0.005)
