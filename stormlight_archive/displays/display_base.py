@@ -53,7 +53,8 @@ class LEDThing(object):
 
     def unset(self, owner):
         if owner not in self.__owned_by.keys():
-            print('warning: {0} missing from {1}'.format(owner, self.__owned_by))
+            if self.__dbg:
+                print('warning: {0} missing from {1}'.format(owner, self.__owned_by))
         else:
             del self.__owned_by[owner]
             if self.__dbg:

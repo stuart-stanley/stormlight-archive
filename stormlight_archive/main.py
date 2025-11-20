@@ -7,7 +7,6 @@ from algos import (
     TreeCircleGroup, TestTreeCircle,
     Twinkle
 )
-from displays import arduino_based_displays
 import random
 
 class _DisplaysProbe(object):
@@ -16,21 +15,18 @@ class _DisplaysProbe(object):
         try:
             from displays import graphics_based_displays
             available['sim'] = graphics_based_displays.GraphicsDisplay
+            print("Found display-simulator")
         except ImportError:
+            print("No display-simulator")
             pass
 
         try:
-            from displays import raspberry_neopixel_displays
-            available['pi'] = raspberry_neopixel_displays.RaspberryNeopixelDisplay
-        except ImportError:
-            pass
-
-        try:
-            # todo: probe for if this is really a dragino device!
-            # todo: change name from arduino to dragino
-            from displays import arduino_based_displays
-            available['dragon'] = arduino_based_displays.ArduinoDisplay
-        except ImportError:
+            from displays import wled_neopixel_displays
+            available['wled'] = wled_neopixel_displays.WledNeopixelDisplay
+            print("Found wled display")
+        except ImportError as ex:
+            print("No wled display", ex)
+            raise
             pass
 
         assert len(available) > 0, \
@@ -44,7 +40,7 @@ class _DisplaysProbe(object):
 
     @property
     def best_default(self):
-        pref_order = ['sim', 'pi', 'dragon']
+        pref_order = ['sim', 'wled']
         for name in pref_order:
             if name in self.__available:
                 return name

@@ -6,7 +6,7 @@ while(true) ; do
     ecode=$?
     if [ ${ecode} != 0 ]; then
 	date
-	sudo tar -czf failsnap.tgz -C/var ./log
+	tar -czf failsnap.tgz -C/var ./log
 	exit 99
     fi
     #sleep 10

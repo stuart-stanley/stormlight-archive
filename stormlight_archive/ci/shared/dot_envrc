@@ -7,7 +7,7 @@ layout_poetry() {
   export POETRY_VIRTUALENVS_IN_PROJECT=true
   export POETRY_VIRTUALENVS_CREATE=true
   # create venv if it doesn't exist
-  poetry install
+  poetry install --without=sim_display
 
   export VIRTUAL_ENV=$(poetry env info --path)
   export POETRY_ACTIVE=1
